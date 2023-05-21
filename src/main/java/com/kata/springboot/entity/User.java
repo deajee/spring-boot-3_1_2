@@ -1,8 +1,8 @@
 package com.kata.springboot.entity;
 
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+
 
 @Entity
 @Table(name = "users")

@@ -1,55 +1,41 @@
 package com.kata.springboot.service;
 
-import com.kata.springboot.dao.UserDao;
 import com.kata.springboot.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.kata.springboot.repository.UserRepository;
 import java.util.List;
 
+
 @Service
+@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
-
-    private UserDao userDao;
-
+    private UserRepository userRepository;
     @Autowired
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
+    public void UserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    @Transactional
     @Override
-    public void add(User user) {
-
-        userDao.add(user);
-    }
-
     @Transactional
-    @Override
-    public User updateUser(User user) {
-
-        return userDao.updateUser(user);
+    public User saveUser(User user) {
+        return userRepository.save(user);
     }
 
+    @Override
     @Transactional
-    @Override
-    public void deleteUserFromTable(Long id) {
-
-        userDao.deleteUserFromTable(id);
+    public void deleteUserById(Long id) {
+        userRepository.deleteById(id);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public List<User> getAllUsers() {
-
-        return userDao.getAllUsers();
+        return userRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
     @Override
-    public User findById(Long id) {
-
-        return userDao.findById(id);
+    public User getUserById(Long id) {
+        return userRepository.getOne(id);
     }
 }

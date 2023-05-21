@@ -13,11 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
-
-
 @Controller
 public class UserController {
-
     private final UserService userService;
 
     @Autowired
@@ -44,19 +41,19 @@ public class UserController {
             return "user-create";
         }
 
-        userService.add(user);
+        userService.saveUser(user);
         return "redirect:/";
     }
 
     @GetMapping("/user-delete/{id}")
     public String deleteUserFromTable(@PathVariable("id") Long id) {
-        userService.deleteUserFromTable(id);
+        userService.deleteUserById(id);
         return "redirect:/";
     }
 
     @GetMapping("/user-update/{id}")
     public String updateUserForm(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", userService.findById(id));
+        model.addAttribute("user", userService.getUserById(id));
         return "user-update";
     }
 
@@ -67,7 +64,7 @@ public class UserController {
             return "user-update";
         }
 
-        userService.updateUser(user);
+        userService.saveUser(user);
         return "redirect:/";
     }
 }
